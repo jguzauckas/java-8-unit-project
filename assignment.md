@@ -2,8 +2,8 @@
 
 I have selected two problems from previous years of the Advent of Code project for you to work on.
 
-Source 1: [Advent of Code - 2018 - Day 2](https://adventofcode.com/2018/day/2)
-Source 2: [Advent of Code - 2019 - Day 2](https://adventofcode.com/2019/day/2)
+Source 1: [Advent of Code - 2016 - Day 2](https://adventofcode.com/2016/day/2)
+Source 2: [Advent of Code - 2017 - Day 2](https://adventofcode.com/2017/day/2)
 
 ---
 
