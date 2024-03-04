@@ -4,8 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Assignment2018 {
-    public static ArrayList<String> readIn(String filename) {
+public class Assignment2017 {
+    public static int[][] readIn(String filename) {
 		BufferedReader in;
 		String str = "";
 
@@ -22,11 +22,18 @@ public class Assignment2018 {
 			e1.printStackTrace();
 		}
 		
-		return list;
+		int[][] input = new int[list.size()][list.get(0).split(", ").length];
+		for (int i = 0; i < list.size(); i++) {
+			String[] temp = list.get(i).split(", ");
+			for (int j = 0; j < temp.length; j++) {
+				input[i][j] = Integer.parseInt(temp[j].trim());
+			}
+		}
+		return input;
 	}
 
     public static void main(String[] args) {
-        ArrayList<String> inventoryIDs = readIn("2018/input.txt");
+        int[][] spreadsheet = readIn("2017/input.txt");
 		
 		// Your work goes here!
     }

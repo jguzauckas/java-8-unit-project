@@ -1,0 +1,2 @@
+The row max/min difference checksum is 981029.
+The row divisor checksum is 24596.

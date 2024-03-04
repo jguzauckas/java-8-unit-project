@@ -32,11 +32,6 @@ public class Assignment2016 {
     public static void main(String[] args) {
         String[][] instructions = readIn("2016/input.txt");
 		
-		for (String[] strArr : instructions) {
-			for (String str : strArr) {
-				System.out.println(str);
-			}
-		}
 		// Your work goes here!
     }
 }

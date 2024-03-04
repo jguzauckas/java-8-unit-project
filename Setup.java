@@ -13,7 +13,7 @@ public class Setup {
         writer.close();
     }
 
-    public static void write2DArrayToFile(String[][] arr, String fileName) throws IOException {
+    public static void write2DArrayToFile(Object[][] arr, String fileName) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
         String str = "";
         for (int i = 0; i < arr.length; i++) {
@@ -105,97 +105,72 @@ public class Setup {
         return answer;
     }
 
-    public static ArrayList<String> generate2018(int size) {
-        ArrayList<String> result = new ArrayList<String>();
-        for (int i = 0; i < size; i++) {
-            String str = "";
-            for (int j = 0; j < 25; j++) {
-                str += Character.toString((char) ((int) (Math.random() * 26 + 97)));
+    public static Integer[][] generate2017(int size) {
+        Integer[][] input = new Integer[size][size];
+        for (int i = 0; i < input.length; i++) {
+            for (int j = 0; j < input[i].length; j++) {
+                input[i][j] = (int) (Math.random() * 10000);
             }
-            result.add(str);
-        }
-        return result;
-    }
-
-    public static String solve2018(ArrayList<String> list) {
-        int countDouble = 0;
-        int countTriple = 0;
-        for (String str : list) {
-            boolean hasDouble = false;
-            boolean hasTriple = false;
-            for (int i = 0; i < str.length(); i++) {
-                int count = 0;
-                String temp = str.substring(i, i + 1);
-                for (int j  = 0; j < str.length(); j++) {
-                    if (temp.equals(str.substring(j, j + 1))) {
-                        count++;
+            boolean hasDivisor = false;
+            for (int j = 0; j < input[i].length; j++) {
+                for (int k = 0; k < input[i].length; k++) {
+                    if (j != k && input[i][j] % input[i][k] == 0) {
+                        hasDivisor = true;
                     }
                 }
-                if (count == 2) {
-                    hasDouble = true;
-                } else if (count == 3) {
-                    hasTriple = true;
+            }
+            if (!hasDivisor) {
+                int rand1 = (int) (Math.random() * input[i].length);
+                int rand2 = (int) (Math.random() * input[i].length);
+                while (rand2 == rand1) {
+                    rand2 = (int) (Math.random() * input[i].length);
                 }
-            }
-            if (hasDouble) {
-                countDouble++;
-            }
-            if (hasTriple) {
-                countTriple++;
+                input[i][rand2] = input[i][rand1] * (int) (Math.random() * 10 + 1);
             }
         }
-        String answer = "There are " + countDouble + " double appearances and " + countTriple + " triple appearances. ";
-        answer += "This produces a checksum of " + countDouble + " * " + countTriple + " = " + (countDouble * countTriple);
-        return answer;
+        return input;
     }
 
-    public static ArrayList<Integer> generate2019(int size) {
-        ArrayList<Integer> intList = new ArrayList<Integer>();
-        size = size - (size % 4);
-        for (int i = 0; i < size - 1; i++) {
-            if (i % 4 == 0) {
-                if (Math.random() > 0.2) {
-                    intList.add(1);
-                } else if (Math.random() > 0.2) {
-                    intList.add(2);
-                } else {
-                    intList.add(99);
+    public static String solve2017(Integer[][] input) {
+        int checksum1 = 0;
+        int checksum2 = 0;
+        for (int i = 0; i < input.length; i++) {
+            int max = input[i][0];
+            int min = input[i][0];
+            int dividend  = -1;
+            int divisor = -1;
+            for (int j = 0; j < input[i].length; j++) {
+                if (input[i][j] > max) {
+                    max = input[i][j];
                 }
-            } else {
-                int temp = (int) (Math.random() * i);
-                if (temp % 4 == 0) {
-                    temp++;
+                if (input[i][j] < min) {
+                    min = input[i][j];
                 }
-                intList.add(temp);
+                for (int k = 0; k < input[i].length; k++) {
+                    if (j != k && input[i][j] % input[i][k] == 0) {
+                        dividend = input[i][j];
+                        divisor = input[i][k];
+                    }
+                }
             }
+            checksum1 += (max - min);
+            checksum2 += dividend / divisor;
         }
-        intList.add(99);
-        return intList;
-    }
-
-    public static String solve2019(ArrayList<Integer> in) {
-        in.set(1, 12);
-        in.set(2, 2);
-        for (int i = 0; i < in.size(); i += 4) {
-            if (in.get(i) == 1) {
-                in.set(in.get(i + 3), in.get(in.get(i + 1)) + in.get(in.get(i + 2)));
-            } else if (in.get(i) == 2) {
-                in.set(in.get(i + 3), in.get(in.get(i + 1)) * in.get(in.get(i + 2)));
-            } else {
-                i = in.size();
-            }
-        }
-
-        String answer = "The value at position 1 is " + in.get(1) + "\n";
+        String answer = "The row max/min difference checksum is " + checksum1 + ".\n";
+        answer += "The row divisor checksum is " + checksum2 + ".";
         return answer;
     }
 
     public static void main(String[] args) {
         String[][] p2016 = generate2016(250);
+        Integer[][] p2017 = generate2017(100);
+        solve2017(p2017);
 
         try {
             write2DArrayToFile(p2016, "2016/input.txt");
             writeStringToFile(solve2016(p2016), "2016/answer.txt");
+            write2DArrayToFile(p2017, "2017/input.txt");
+            writeStringToFile(solve2017(p2017), "2017/answer.txt");
         } catch (IOException e1) {
 			e1.printStackTrace();
 		}
