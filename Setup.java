@@ -105,7 +105,7 @@ public class Setup {
         Integer[][] input = new Integer[size][size];
         for (int i = 0; i < input.length; i++) {
             for (int j = 0; j < input[i].length; j++) {
-                input[i][j] = (int) (Math.random() * 10000);
+                input[i][j] = (int) (Math.random() * 10000 + 1);
             }
             boolean hasDivisor = false;
             for (int j = 0; j < input[i].length; j++) {
