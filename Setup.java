@@ -53,7 +53,7 @@ public class Setup {
         int row1 = 1;
         int col1 = 1;
         int row2 = 2;
-        int col2 = 2;
+        int col2 = 0;
         for (int i = 0; i < input.length; i++) {
             for (int j = 0; j < input[i].length; j++) {
                 if (input[i][j] == null) {
